@@ -1,0 +1,3 @@
+# Yacg library
+
+Yacg Core, used by CLI json2code, ....
