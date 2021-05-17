@@ -1,9 +1,15 @@
 {
-  "version": 2,
-  "cli": { "defaultCollection": "@nrwl/node", "packageManager": "yarn" },
-  "defaultProject": "json2code",
-  "generators": {
-    "@nrwl/node:library": { "buildable": true, "publishable": true },
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/node",
+    "packageManager": "yarn"
+  },
+  "defaultProject": "ng-yacg",
+  "schematics": {
+    "@nrwl/node:library": {
+      "buildable": true,
+      "publishable": true
+    },
     "@nrwl/angular:application": {
       "style": "scss",
       "linter": "eslint",
@@ -16,29 +22,31 @@
       "linter": "eslint",
       "unitTestRunner": "jest"
     },
-    "@nrwl/angular:component": { "style": "scss" }
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
   },
   "projects": {
     "core": {
       "root": "libs/core",
       "sourceRoot": "libs/core/src",
       "projectType": "library",
-      "targets": {
+      "architect": {
         "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": { "lintFilePatterns": ["libs/core/**/*.ts"] }
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/core/**/*.ts"]
+          }
         },
         "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/core"],
+          "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/core/jest.config.js",
             "passWithNoTests": true
           }
         },
         "build": {
-          "executor": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
+          "builder": "@nrwl/node:package",
           "options": {
             "outputPath": "dist/libs/core",
             "tsConfig": "libs/core/tsconfig.lib.json",
@@ -55,14 +63,14 @@
           }
         },
         "publish": {
-          "executor": "@nrwl/workspace:run-commands",
+          "builder": "@nrwl/workspace:run-commands",
           "options": {
             "cwd": "dist/libs/core",
             "command": "npm publish --access=public"
           }
         },
         "make": {
-          "executor": "@nrwl/workspace:run-commands",
+          "builder": "@nrwl/workspace:run-commands",
           "options": {
             "parallel": false,
             "cwd": "./",
@@ -80,11 +88,9 @@
       "root": "apps/json2code",
       "sourceRoot": "apps/json2code/src",
       "projectType": "application",
-      "prefix": "json2code",
-      "targets": {
+      "architect": {
         "build": {
-          "executor": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
+          "builder": "@nrwl/node:build",
           "options": {
             "outputPath": "dist/apps/json2code",
             "main": "apps/json2code/src/main.ts",
@@ -114,17 +120,22 @@
           }
         },
         "serve": {
-          "executor": "@nrwl/node:execute",
-          "options": { "buildTarget": "json2code:build" }
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "json2code:build"
+          }
         },
         "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": { "lintFilePatterns": ["apps/json2code/**/*.ts"] }
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/json2code/**/*.ts"]
+          }
         },
         "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/json2code"],
-          "options": { "jestConfig": "apps/json2code/jest.config.js" }
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/json2code/jest.config.js"
+          }
         }
       }
     },
@@ -133,9 +144,9 @@
       "root": "apps/ng-yacg",
       "sourceRoot": "apps/ng-yacg/src",
       "prefix": "yacg",
-      "targets": {
+      "architect": {
         "build": {
-          "executor": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/apps/ng-yacg",
             "index": "apps/ng-yacg/src/index.html",
@@ -152,47 +163,55 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "apps/ng-yacg/src/environments/environment.ts",
                   "with": "apps/ng-yacg/src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           }
         },
         "serve": {
-          "executor": "@angular-devkit/build-angular:dev-server",
-          "options": { "browserTarget": "ng-yacg:build" },
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ng-yacg:build:development"
+          },
           "configurations": {
-            "production": { "browserTarget": "ng-yacg:build:production" }
+            "production": {
+              "browserTarget": "ng-yacg:build:development"
+            }
           }
         },
         "extract-i18n": {
-          "executor": "@angular-devkit/build-angular:extract-i18n",
-          "options": { "browserTarget": "ng-yacg:build" }
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ng-yacg:build"
+          }
         },
         "lint": {
-          "executor": "@nrwl/linter:eslint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
               "apps/ng-yacg/src/**/*.ts",
@@ -201,9 +220,9 @@
           }
         },
         "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/ng-yacg"],
+          "builder": "@nrwl/jest:jest",
           "options": {
+            "outputPath": "coverage/apps/ng-yacg",
             "jestConfig": "apps/ng-yacg/jest.config.js",
             "passWithNoTests": true
           }
