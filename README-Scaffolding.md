@@ -16,6 +16,7 @@ nx generate @nrwl/angular:application --name=ngYacg --style=scss --e2eTestRunner
 ```
 
 - #nrwl/node 
+To use node 16.xx+ `yarn config set ignore-engines true`
 Add custom webpack plugin ShebangPlugin, to keep `#!/usr/bin/env node` shebang.  
 This requires webpack 5 :(
   
