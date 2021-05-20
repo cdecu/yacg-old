@@ -1,0 +1,36 @@
+header {
+  padding: 0.33rem;
+  display: grid;
+  grid-template-areas:
+    'lLogo'
+    'cTitle'
+    'rBtn';
+  grid-template-columns: auto;
+  @screen sm {
+    grid-template-areas: 'lLogo cTitle rBtn';
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .lLogo {
+    grid-area: lLogo;
+    margin: auto;
+    @screen sm {
+      margin: 0;
+    }
+  }
+
+  .cTitle {
+    grid-area: cTitle;
+    margin: auto;
+  }
+
+  .rBtn {
+    grid-area: rBtn;
+    margin: auto;
+    @screen sm {
+      margin: auto 5px;
+    }
+    @apply sm:m-auto;
+    alignment: center;
+  }
+}

@@ -32,7 +32,6 @@ Yacg is developed in typescript, using:
 - [jest](https://jestjs.io/) as testing framework.
 - [eslint](https://eslint.org/) as code linter.
 - [prettier](https://prettier.io/) as code formatted.
-- [typedoc](https://typedoc.org/) as Documentation generator.  
 and of course yarn, webpack, ....
 
 
@@ -58,6 +57,13 @@ It is just the beginning but ...
 - https://dev-academy.com/angular-user-login-and-registration-guide-cookies-and-jwt/?utm_source=twitter&s=09
 - https://www.jayfreestone.com/writing/bulletproof-flag/
 - https://github.com/kapunahelewong/module-injector-tree/blob/master/src/app/lazy/lazy.module.ts
+
+- https://github.com/compodoc
+- https://ngx-codemirror.vercel.app/
+- https://les-enovateurs.com/
+
+
+
 
 ## Contributing
 

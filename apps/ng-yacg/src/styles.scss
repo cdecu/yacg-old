@@ -1,1 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+  body {
+    @apply bg-white text-black;
+    @apply dark:bg-black dark:text-gray-200;
+
+    h1 {
+      @apply text-3xl font-bold;
+    }
+
+    h2 {
+      @apply text-2xl font-bold;
+    }
+
+    a {
+      @apply text-indigo-900 font-bold;
+      @apply dark:text-gray-200;
+    }
+
+    header {
+      @apply bg-indigo-900 text-white;
+      @apply dark:bg-indigo-900 dark:text-gray-200;
+    }
+
+    details {
+      @apply rounded border border-indigo-300;
+      @apply dark:border-gray-600;
+      summary {
+        @apply pl-2;
+      }
+      pre {
+        @apply p-4 rounded;
+      }
+    }
+    pre {
+      @apply bg-gray-700 text-gray-50 font-mono text-sm;
+      @apply dark:bg-gray-600;
+    }
+  }
+}
