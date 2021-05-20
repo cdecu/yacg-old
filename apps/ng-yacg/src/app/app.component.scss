@@ -1,5 +1,5 @@
 main {
-  min-height: 50vh;
+  min-height: 66vh;
   display: grid;
   grid-template-areas:
     'input'
@@ -12,11 +12,17 @@ main {
 
   .input {
     grid-area: input;
-    background-color: green;
+    margin: 0 10px 0 10px;
+    @screen sm {
+      margin: 0 5px 0 10px;
+    }
   }
 
   .output {
     grid-area: output;
-    background-color: red;
+    margin: 0 10px 0 10px;
+    @screen sm {
+      margin: 0 10px 0 5px;
+    }
   }
 }

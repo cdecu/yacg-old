@@ -3,6 +3,11 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@import '~codemirror/lib/codemirror.css';
+@import '~codemirror/theme/monokai';
+@import '~codemirror/addon/fold/foldgutter.css';
+@import '~codemirror/addon/lint/lint.css';
+
 @layer base {
   body {
     @apply bg-white text-black;

@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  flex-direction: column;
+
+  .output-title {
+  }
+
+  .output-editor {
+    flex: 1;
+    @apply border
+
+    dark:border-gray-600;
+
+    display: flex;
+    ngx-codemirror {
+      flex: 1;
+      ::ng-deep .CodeMirror {
+        min-height: 100%;
+        max-height: 100%;
+        max-width: calc(100vw - 20px);
+        @screen sm {
+          max-width: calc(50vw - 15px);
+        }
+      }
+    }
+  }
+}
