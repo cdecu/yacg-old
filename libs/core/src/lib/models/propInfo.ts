@@ -1,37 +1,29 @@
-import {
-  isPrimitive,
-  modelInfo,
-  objectInfo,
-  propertyInfo,
-  propertyType,
-  valType,
-} from './intfs';
-import { Logger } from '../alice/logger';
+import { isPrimitive, logHelper, modelInfo, objectInfo, propertyInfo, propertyType, valType } from './intfs';
 
 /**
  * Object Property Abstract Info
  */
 export class PropertyInfo implements propertyInfo {
   public type = propertyType.otUnknown;
-  public subType?: PropertyInfo;
+  public subType!: PropertyInfo;
   public description = '';
   public required = true;
   private sampleTypes = new Set<propertyType>([]);
-  private sampleValues = new Set<unknown>([]);
+  private sampleValues = new Set<any>([]);
   private sampleSize = 0;
 
   /**
    * Just initialize name.
    * TODO I dont like to pass the logger everywhere but ...
    */
-  constructor(public readonly name: string, public logger?: Logger) {}
+  constructor(public readonly name: string, public logger?: logHelper) {}
 
   /**
    * Add a Sample value the the property. Detect the typeof
    * @param val
    * @returns {propertyInfo}
    */
-  addSampleVal(val: unknown): propertyInfo {
+  addSampleVal(val: any): propertyInfo {
     const vt = valType(val);
     this.type ||= vt;
     this.sampleSize += 1;
@@ -46,8 +38,9 @@ export class PropertyInfo implements propertyInfo {
   public detectType(model: modelInfo, owner: objectInfo) {
     //  Build description
     this.description += Array.from(this.sampleValues)
-      .map((v) => '\n@example ' + JSON.stringify(v))
-      .join('');
+      .filter((v) => !!v)
+      .map((v) => '@example ' + JSON.stringify(v))
+      .join('\n');
 
     // Required if always present
     if (model.sampleSize > 1) {
@@ -104,17 +97,13 @@ export class PropertyInfo implements propertyInfo {
    */
   public detectListSubType(model: modelInfo, owner: objectInfo) {
     const itemTypes = new Set<propertyType>([]);
-    this.sampleValues.forEach((v: undefined[]) =>
-      v.forEach((i) => itemTypes.add(valType(i)))
-    );
+    this.sampleValues.forEach((v: any[]) => v.forEach((i: any) => itemTypes.add(valType(i))));
     let cntCplex = 0;
     itemTypes.forEach((vt) => (cntCplex += isPrimitive(vt) ? 0 : 1));
     if (!cntCplex) {
       // Only Primitive types
       this.subType = new PropertyInfo(this.name + '.item', this.logger);
-      this.sampleValues.forEach((v: undefined[]) =>
-        v.forEach((i) => this.subType.addSampleVal(i))
-      );
+      this.sampleValues.forEach((v: any[]) => v.forEach((i: any) => this.subType.addSampleVal(i)));
       return;
     }
     // List of Object ?

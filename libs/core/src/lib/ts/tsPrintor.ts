@@ -1,34 +1,32 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import * as handlebars from 'handlebars';
-import { convertTSIntfName, convertTSPropertyName } from '../ts/tsUtils';
+import { convertTSIntfName, convertTSPropertyName } from './tsUtils';
 import { modelInfo, propertyInfo, propertyType } from '../models/intfs';
+// @ts-ignore
+import * as handlebars from 'handlebars/dist/cjs/handlebars';
 
 /**
  * Print to typescript.
  */
 export class TSPrintor {
   private scope?: unknown;
+  public tmplSrc = `
+{{~JDocDescr 0 description~}}
+export interface {{name}} {
+  {{#properties}}
+  {{~JDocDescr 2 description~}}
+  {{~Indent 2~}} {{name}} {{decl}} {{type}};
+  {{/properties}}
+  }
+`;
 
   constructor(private config: { [key: string]: unknown }) {
-    handlebars.registerHelper('JDocDescr', (indent: number, val: string) =>
-      TSPrintor.JDocDescr(indent, val)
-    );
+    handlebars.registerHelper('JDocDescr', (indent: number, val: string) => TSPrintor.JDocDescr(indent, val));
     handlebars.registerHelper('Indent', (indent: number) => ' '.repeat(indent));
-    handlebars.registerHelper('json', (context) => {
+    handlebars.registerHelper('json', (context: any) => {
       return JSON.stringify(context, null, 2);
     });
   }
 
   //region Template Helpers
-  /**
-   * Load Code Template
-   */
-  public loadTemplate(tmpl: string): string {
-    const fn = path.join(__dirname, './assets/tsTemplates', tmpl);
-    return fs.readFileSync(fn, 'utf8');
-  }
-
   /**
    * Format Description
    * @param {number} indent
@@ -36,15 +34,13 @@ export class TSPrintor {
    * @constructor
    * @private
    */
-  private static JDocDescr(indent: number, val: string): string {
+  private static JDocDescr(indent: number, val: string): string | null {
     if (!val) return null;
     const lines = val.split('\n');
     const prefix = ' '.repeat(indent);
     if (lines.length > 1) {
       let descr = prefix + '/**\n';
-      lines.forEach(
-        (l) => (descr += l ? prefix + ' * ' + l + '\n' : prefix + ' *\n')
-      );
+      lines.forEach((l) => (descr += l ? prefix + ' * ' + l + '\n' : prefix + ' *\n'));
       descr += prefix + ' */\n';
       return descr;
     }
@@ -53,8 +49,7 @@ export class TSPrintor {
   //endregion
 
   public printModel(model: modelInfo): string {
-    const tmplSrc = this.loadTemplate('tsInterface.tmpl');
-    const tmpl = handlebars.compile(tmplSrc, { noEscape: true });
+    const tmpl = handlebars.compile(this.tmplSrc, { noEscape: true });
     this.buildModel(model);
     return tmpl(this.scope);
   }
@@ -67,10 +62,7 @@ export class TSPrintor {
   private buildModel(model: modelInfo) {
     this.scope = {
       name: convertTSIntfName(model.name),
-      description:
-        this.config?.description ??
-        model.description ??
-        model.rootObject.description,
+      description: this.config?.description ?? model.description ?? model.rootObject.description,
       properties: this.buildProperties(model),
     };
   }

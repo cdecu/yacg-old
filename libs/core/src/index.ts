@@ -1,4 +1,3 @@
-export * from './lib/alice/logger';
 export * from './lib/models/intfs';
 export * from './lib/models/objectInfo';
 export * from './lib/models/modelInfo';

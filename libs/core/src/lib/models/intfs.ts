@@ -1,4 +1,35 @@
 /**
+ * List of known log levels. Used to specify the urgency of a log message.
+ */
+export const enum LogLevel {
+  Verbose,
+  Info,
+  Warn,
+  Error,
+}
+
+/**
+ * A logger that will not produce any output.
+ *
+ * This logger also serves as the base class of other loggers as it implements all the required utility functions.
+ */
+export interface logHelper {
+  /**
+   * Print a log message.
+   *
+   * @param message  The message itself.
+   */
+  log(message: string): void;
+  /**
+   * Print a log message.
+   *
+   * @param message  The message itself.
+   * @param level  The urgency of the log message.
+   */
+  log(message: string, level: LogLevel): void;
+}
+
+/**
  * AMI known types
  */
 export const enum propertyType {
@@ -21,8 +52,8 @@ export interface propertyInfo {
   type: propertyType;
   description: string;
   required: boolean;
-  subType?: propertyInfo;
-  addSampleVal: (val: unknown) => propertyInfo;
+  subType: propertyInfo;
+  addSampleVal: (val: any) => propertyInfo;
 }
 
 /**
@@ -52,7 +83,7 @@ export interface modelInfo {
  * @param {any} value
  * @returns {propertyType}
  */
-export function valType(value: unknown): propertyType {
+export function valType(value: any): propertyType {
   if (Array.isArray(value)) return propertyType.otList;
 
   const type = typeof value;
@@ -68,8 +99,7 @@ export function valType(value: unknown): propertyType {
     const tag = Object.prototype.toString.call(value);
     if (tag == '[object String]') return propertyType.otString;
     if (tag == '[object Number]') {
-      const x: number = +value;
-      if (Number.isInteger(x)) return propertyType.otInteger;
+      if (Number.isInteger(value)) return propertyType.otInteger;
       return propertyType.otFloat;
     }
     return propertyType.otMap;

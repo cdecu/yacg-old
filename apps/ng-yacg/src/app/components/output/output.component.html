@@ -1,5 +1,5 @@
-<p class="output-title">Output title</p>
+<p class="output-title">Generated Intf</p>
 
 <div class="output-editor">
-  <ngx-codemirror #codeEditor [options]="cmOptions"> </ngx-codemirror>
+  <ngx-codemirror #codeEditor [ngModel]="this.json2code.$code | async" [options]="cmOptions"> </ngx-codemirror>
 </div>

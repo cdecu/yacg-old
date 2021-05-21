@@ -1,6 +1,5 @@
-import { modelInfo, objectInfo, propertyInfo } from './intfs';
+import { logHelper, modelInfo, objectInfo, propertyInfo } from './intfs';
 import { PropertyInfo } from './propInfo';
-import { Logger } from '../alice/logger';
 
 /**
  * Object Abstract Info
@@ -8,13 +7,13 @@ import { Logger } from '../alice/logger';
  */
 export class ObjectInfo implements objectInfo {
   public readonly properties: PropertyInfo[] = [];
-  public readonly description: string;
+  public readonly description = '';
 
   /**
    * Just initialize name,type
    * TODO I dont like to pass the logger everywhere but ...
    */
-  constructor(public readonly name: string, public logger?: Logger) {}
+  constructor(public readonly name: string, public logger?: logHelper) {}
 
   /**
    * Add or update a property from sample value

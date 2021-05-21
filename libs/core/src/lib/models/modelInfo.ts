@@ -1,23 +1,22 @@
-import { modelInfo } from './intfs';
+import { logHelper, modelInfo } from './intfs';
 import { PropertyInfo } from './propInfo';
 import { ObjectInfo } from './objectInfo';
-import { Logger } from '../alice/logger';
 
 /**
  * Abstract Model Info
  */
 export class ModelInfo implements modelInfo {
   public readonly name: string;
-  public readonly description: string;
+  public readonly description = '';
   public readonly rootObject: ObjectInfo;
-  public readonly properties: PropertyInfo[];
+  // public readonly properties: PropertyInfo[];
   public sampleSize = 0;
 
   /**
    * Abstract Model Info constructor
    * TODO I dont like to pass the logger everywhere but ...
    */
-  constructor(modelName: string, rootName = 'MyIntf', public logger?: Logger) {
+  constructor(modelName: string, rootName = 'MyIntf', public logger?: logHelper) {
     this.name = modelName;
     this.rootObject = new ObjectInfo(rootName, logger);
   }
@@ -26,7 +25,7 @@ export class ModelInfo implements modelInfo {
    * Load from a JSON Map or Array
    * @param json
    */
-  public loadJSON(json: unknown): void {
+  public loadJSON(json: any): void {
     if (Array.isArray(json)) {
       this.logger?.log(`load Sample Array of ${json.length}`);
       this.sampleSize = json.length;
@@ -49,10 +48,8 @@ export class ModelInfo implements modelInfo {
    * Add all object entries as property
    * @param json
    */
-  public parseJSON(json: unknown): void {
-    Object.entries(json).forEach(([key, val]) =>
-      this.rootObject.addSampleProperty(key, val)
-    );
+  public parseJSON(json: any): void {
+    Object.entries(json).forEach(([key, val]) => this.rootObject.addSampleProperty(key, val));
   }
 
   /**
