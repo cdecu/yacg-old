@@ -8,13 +8,24 @@ import { json2codeService } from '../../services/json2code.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputComponent {
-  private testJSON = `{
+  private testJSON = `[
+{
   "name": "yacg",
   "version": "0.0.1",
   "license": "MIT",
-  "author": "Carlos <carlos@decumont.be>",
-  "private": false
+  "i": 123,
+  "f": 123.45,
+  "ii": [1,2,3,4],
+  "aa": [1,2.2,"test"],
+  "e" : {"name": "yacg", "yyy":2}
+},
+{
+  "name": "yacg",
+  "version": "0.0.1",
+  "license": "MIT",
+  "e" : {"zzz": "yacg", "yyy":1}
 }
+]
 `;
   public readonly cmOptions = {
     theme: 'monokai',
@@ -31,6 +42,7 @@ export class InputComponent {
 
   public get jsonString() {
     // Initial Value Only Once ...
+    // because we are onPush. Data->Edit->json2codeService
     if (this.testJSON) {
       const testJSON = this.testJSON;
       this.json2code.data = testJSON;

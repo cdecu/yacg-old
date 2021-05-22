@@ -2,7 +2,7 @@
 
 Yacg Core, used by CLI json2code, ....
 
-
+> run `nx run core:prepare` to compile the print templates
 
 # Make Browser Compatible :(
 tsPrintor.ts >>> 

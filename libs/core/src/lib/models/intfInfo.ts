@@ -1,25 +1,34 @@
-import { logHelper, modelInfo, objectInfo, propertyInfo } from './intfs';
+import { modelInfo, intfInfo, propertyInfo } from './intfs';
 import { PropertyInfo } from './propInfo';
 
 /**
  * Object Abstract Info
  * a Object is (for us) just a list of properties
  */
-export class ObjectInfo implements objectInfo {
-  public readonly properties: PropertyInfo[] = [];
-  public readonly description = '';
+export class IntfInfo implements intfInfo {
+  public properties: PropertyInfo[] = [];
+  public description = '';
+  public sampleSize = 0;
 
   /**
    * Just initialize name,type
-   * TODO I dont like to pass the logger everywhere but ...
    */
-  constructor(public readonly name: string, public logger?: logHelper) {}
+  constructor(public name: string) {}
+
+  /**
+   * Clear
+   */
+  public clear(name: string, description: string): void {
+    this.name = name;
+    this.description = description;
+    this.properties.length = 0;
+    this.sampleSize = 0;
+  }
 
   /**
    * Add or update a property from sample value
    * @param key
    * @param val
-   * @private
    */
   public addSampleProperty(key: string, val: unknown): propertyInfo {
     const found = this.properties.find((i) => i.name === key);
@@ -27,7 +36,7 @@ export class ObjectInfo implements objectInfo {
       found.addSampleVal(val);
       return found;
     }
-    const newOne = new PropertyInfo(key, this.logger);
+    const newOne = new PropertyInfo(key);
     this.properties.push(newOne);
     newOne.addSampleVal(val);
     return newOne;
@@ -36,7 +45,7 @@ export class ObjectInfo implements objectInfo {
   /**
    * Detect properties type from sample values
    */
-  public detectType(model: modelInfo) {
+  public detectTypes(model: modelInfo) {
     this.properties.forEach((prop) => prop.detectType(model, this));
   }
 }

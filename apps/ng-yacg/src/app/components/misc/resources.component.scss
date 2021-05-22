@@ -12,9 +12,17 @@ details {
       @apply col-auto justify-center flex flex-col space-x-5 border dark:border-gray-600;
       @apply hover:bg-indigo-200;
       padding: 2px;
-      height: 40px;
+      height: 44px;
       a {
-        @apply flex flex-row space-x-5 m-auto;
+        @apply flex flex-row m-auto space-x-2;
+        span {
+          @apply justify-center flex flex-col;
+          height: 44px;
+        }
+        img {
+          height: 34px;
+          margin: auto;
+        }
       }
     }
   }

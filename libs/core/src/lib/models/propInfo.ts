@@ -1,4 +1,4 @@
-import { isPrimitive, logHelper, modelInfo, objectInfo, propertyInfo, propertyType, valType } from './intfs';
+import { isPrimitive, modelInfo, intfInfo, propertyInfo, propertyType, valType } from './intfs';
 
 /**
  * Object Property Abstract Info
@@ -8,15 +8,33 @@ export class PropertyInfo implements propertyInfo {
   public subType!: PropertyInfo;
   public description = '';
   public required = true;
-  private sampleTypes = new Set<propertyType>([]);
-  private sampleValues = new Set<any>([]);
+  public sampleTypes = new Set<propertyType>([]);
+  public sampleValues = new Set<any>([]);
   private sampleSize = 0;
 
   /**
    * Just initialize name.
    * TODO I dont like to pass the logger everywhere but ...
    */
-  constructor(public readonly name: string, public logger?: logHelper) {}
+  constructor(public readonly name: string) {}
+
+  /**
+   * Is Simple Type
+   * @returns boolean
+   */
+  get simpleType(): boolean {
+    return this.sampleTypes.size <= 1;
+  }
+
+  /**
+   * only Primitive Types
+   * @returns boolean
+   */
+  get onlyPrimitives(): boolean {
+    let cntCplex = 0;
+    this.sampleTypes.forEach((vt) => (cntCplex += isPrimitive(vt) ? 0 : 1));
+    return !cntCplex;
+  }
 
   /**
    * Add a Sample value the the property. Detect the typeof
@@ -35,17 +53,22 @@ export class PropertyInfo implements propertyInfo {
   /**
    * Detect type from sample values
    */
-  public detectType(model: modelInfo, owner: objectInfo) {
+  public detectType(model: modelInfo, owner: intfInfo) {
     //  Build description
-    this.description += Array.from(this.sampleValues)
-      .filter((v) => !!v)
-      .map((v) => '@example ' + JSON.stringify(v))
-      .join('\n');
+    if (this.sampleValues.size > 0) {
+      const examples = Array.from(this.sampleValues)
+        .map((v) => JSON.stringify(v))
+        .filter((v) => v != '""')
+        .join(';');
+      if (examples) {
+        this.description += '@example ' + examples;
+      }
+    }
 
     // Required if always present
-    if (model.sampleSize > 1) {
-      this.required = model.sampleSize === this.sampleSize;
-    }
+    // if (model.sampleSize > 1) {
+    this.required = model.sampleSize === this.sampleSize;
+    // }
 
     // Count complex types (not primitive)
     let cntCplex = 0;
@@ -68,6 +91,19 @@ export class PropertyInfo implements propertyInfo {
       return;
     }
 
+    // Property is a Map  {}
+    if (this.sampleTypes.size === 1 && this.type === propertyType.otMap) {
+      const o = model.addChildObject(this);
+      o.sampleSize = this.sampleTypes.size;
+      this.sampleValues.forEach((v: any) => {
+        Object.entries(v).forEach(([key, val]) => {
+          o.addSampleProperty(key, val);
+        });
+      });
+      o.detectTypes(model);
+      return;
+    }
+
     // NO yet handled
     throw `Unsupported type ${model.name}.${owner.name}.${this.name}`;
   }
@@ -77,8 +113,8 @@ export class PropertyInfo implements propertyInfo {
    * So type is converted to a Enum or a Type Alias.
    * @private
    */
-  private detectEnumType(model: modelInfo, owner: objectInfo) {
-    this.logger?.log(`EnumType ${model.name}.${owner.name}.${this.name}`);
+  private detectEnumType(model: modelInfo, owner: intfInfo) {
+    // this.logger?.log(`EnumType ${model.name}.${owner.name}.${this.name}`);
   }
 
   /**
@@ -86,28 +122,31 @@ export class PropertyInfo implements propertyInfo {
    * So type is converted to a Type Alias.
    * @private
    */
-  private detectUnionType(model: modelInfo, owner: objectInfo) {
-    this.logger?.log(`UnionType ${model.name}.${owner.name}.${this.name}`);
+  private detectUnionType(model: modelInfo, owner: intfInfo) {
+    // this.logger?.log(`UnionType ${model.name}.${owner.name}.${this.name}`);
   }
 
   /**
    * Extract list items type(s) from sampleValues
    * @param {modelInfo} model
-   * @param {objectInfo} owner
+   * @param {intfInfo} owner
    */
-  public detectListSubType(model: modelInfo, owner: objectInfo) {
+  public detectListSubType(model: modelInfo, owner: intfInfo) {
+    // Build itemTypes Set
     const itemTypes = new Set<propertyType>([]);
     this.sampleValues.forEach((v: any[]) => v.forEach((i: any) => itemTypes.add(valType(i))));
+
+    // Count Cplex itemTypes
     let cntCplex = 0;
     itemTypes.forEach((vt) => (cntCplex += isPrimitive(vt) ? 0 : 1));
     if (!cntCplex) {
       // Only Primitive types
-      this.subType = new PropertyInfo(this.name + '.item', this.logger);
+      this.subType = new PropertyInfo(this.name + '.item');
       this.sampleValues.forEach((v: any[]) => v.forEach((i: any) => this.subType.addSampleVal(i)));
       return;
     }
     // List of Object ?
-    this.logger?.log(`List ${model.name}.${owner.name}.${this.name} SubType`);
-    this.subType = new PropertyInfo(this.name + '.item', this.logger);
+    // this.logger?.log(`List ${model.name}.${owner.name}.${this.name} SubType`);
+    this.subType = new PropertyInfo(this.name + '.item');
   }
 }

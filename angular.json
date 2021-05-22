@@ -45,36 +45,14 @@
             "passWithNoTests": true
           }
         },
-        "build": {
-          "builder": "@nrwl/node:package",
+        "prepare": {
+          "builder": "@nrwl/workspace:run-commands",
           "options": {
-            "outputPath": "dist/libs/core",
-            "tsConfig": "libs/core/tsconfig.lib.json",
-            "packageJson": "libs/core/package.json",
-            "main": "libs/core/src/index.ts",
-            "assets": [
-              "libs/core/*.md",
-              {
-                "glob": "**/*.tmpl",
-                "input": "libs/core/assets/",
-                "output": "./assets/"
-              }
+            "cwd": "libs/core/",
+            "commands": [
+              "ls src/lib/ts/",
+              "handlebars src/lib/ts/tsInterface.handlebars -f src/lib/ts/tsInterface.precompiled.js -c"
             ]
-          }
-        },
-        "publish": {
-          "builder": "@nrwl/workspace:run-commands",
-          "options": {
-            "cwd": "dist/libs/core",
-            "command": "npm publish --access=public"
-          }
-        },
-        "make": {
-          "builder": "@nrwl/workspace:run-commands",
-          "options": {
-            "parallel": false,
-            "cwd": "./",
-            "commands": ["nx lint core", "nx test core", "nx run core:build", "nx publish core"]
           }
         }
       }

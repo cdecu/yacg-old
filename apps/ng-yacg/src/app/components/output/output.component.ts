@@ -8,12 +8,37 @@ import { json2codeService } from '../../services/json2code.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OutputComponent {
-  public readonly cmOptions = {
+  // TODO make dynamic printor list
+  public readonly printors = ['typescript', 'pascal'];
+  public readonly cmOptions: { [key: string]: any } = {
     lineNumbers: true,
     theme: 'monokai',
-    mode: { name: 'javascript', typescript: true },
+    foldGutter: true,
+    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
     readOnly: true,
   };
 
-  constructor(public readonly json2code: json2codeService) {}
+  constructor(public readonly json2code: json2codeService) {
+    this.initEditorOptions(this.json2code.selectedPrintor);
+  }
+
+  public get selectedPrintor(): string {
+    return this.json2code.selectedPrintor;
+  }
+  public set selectedPrintor(value: string) {
+    if (value !== this.json2code.selectedPrintor) {
+      this.json2code.selectedPrintor = value;
+      this.initEditorOptions(value);
+    }
+  }
+  private initEditorOptions(value: string) {
+    switch (value) {
+      case 'pascal':
+        this.cmOptions.mode = 'pascal';
+        break;
+      default:
+        this.cmOptions.mode = { name: 'javascript', typescript: true };
+        break;
+    }
+  }
 }

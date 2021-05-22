@@ -53,16 +53,29 @@ export interface propertyInfo {
   description: string;
   required: boolean;
   subType: propertyInfo;
+  sampleTypes: Set<propertyType>;
+  sampleValues: Set<any>;
+  readonly simpleType: boolean;
+  readonly onlyPrimitives: boolean;
   addSampleVal: (val: any) => propertyInfo;
 }
 
 /**
  * AMI Object Info. A Object is (for us) just a list of properties.
  */
-export interface objectInfo {
+export interface intfInfo {
   name: string;
   description: string;
   properties: propertyInfo[];
+  /**
+   * Number of sample data used to build the AMI.
+   */
+  sampleSize: number;
+  addSampleProperty: (key: string, val: unknown) => propertyInfo;
+  /**
+   * Detect properties type from sample values
+   */
+  detectTypes: (model: modelInfo) => void;
 }
 
 /**
@@ -71,11 +84,36 @@ export interface objectInfo {
 export interface modelInfo {
   name: string;
   description: string;
-  rootObject: objectInfo;
+  rootIntf: intfInfo;
+  childIntfs: intfInfo[];
   /**
    * Number of sample data used to build the AMI.
    */
   sampleSize: number;
+  /**
+   * add Child Object needed by sub-type
+   * @param val
+   * @returns {intfInfo}
+   */
+  addChildObject: (val: propertyInfo) => intfInfo;
+  /**
+   * Load from a JSON Map or Array
+   * @param name
+   * @param description
+   * @param json
+   */
+  loadFromJSON: (name: string, description: string, json: any) => void;
+}
+/**
+ * Abstract Model Printor
+ */
+export interface modelPrintor {
+  /**
+   * printModel return the typescript code declaring ...
+   * @param {modelInfo} model
+   * @returns {string}
+   */
+  printModel: (model: modelInfo) => string;
 }
 
 /**
@@ -99,7 +137,7 @@ export function valType(value: any): propertyType {
     const tag = Object.prototype.toString.call(value);
     if (tag == '[object String]') return propertyType.otString;
     if (tag == '[object Number]') {
-      if (Number.isInteger(value)) return propertyType.otInteger;
+      if (Number.isInteger(value.valueOf())) return propertyType.otInteger;
       return propertyType.otFloat;
     }
     return propertyType.otMap;

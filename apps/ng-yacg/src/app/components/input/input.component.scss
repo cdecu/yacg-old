@@ -2,10 +2,11 @@
   display: flex;
   flex-direction: column;
 
-  .output-title {
+  .input-header {
+    height: 1.5rem;
   }
 
-  .output-editor {
+  .input-editor {
     flex: 1;
     @apply border
 

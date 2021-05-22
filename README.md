@@ -1,7 +1,6 @@
 # Yacg
 
-Spare time project !  
-Yet another Code generator. It generates mostly interface definitions.
+Yet another Code generator. It is a spare time project !    
 NO it is not yacc :( it is just a small personal project.
 - Transform json data into code interface.   
   - guess required

@@ -45,13 +45,13 @@ function main(): any {
       'parse <src>',
       'Test models parsing',
       (yargs: any) => yargs,
-      (yargs: any) => parseCmd(yargs)
+      (yargs: any) => parseCmd(yargs),
     )
     .command(
       '$0 <src>',
       'More Command',
       (yargs: any) => yargs,
-      (yargs: any) => parseCmd(yargs)
+      (yargs: any) => parseCmd(yargs),
     )
     .epilog('copyright 2021').argv;
 }

@@ -1,5 +1,6 @@
 export * from './lib/models/intfs';
-export * from './lib/models/objectInfo';
+export * from './lib/models/intfInfo';
 export * from './lib/models/modelInfo';
 export * from './lib/ts/tsUtils';
 export * from './lib/ts/tsPrintor';
+export * from './lib/pascal/pascalPrintor';
