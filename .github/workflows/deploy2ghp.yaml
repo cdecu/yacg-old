@@ -9,8 +9,11 @@ jobs:
       - uses: actions/setup-node@v2.1.5
         with:
           node-version: '14'
-      - run: yarn install
-      - run: DEBUG=* yarn nx run ng-yacg:build:production --progress --verbose --output-path dist/ --output-hashing none
+      - run: |
+          npm -g i @angular/cli
+          npm -g i nx
+          yarn install
+      - run: DEBUG=* nx run ng-yacg:build:production --progress --verbose --output-path dist/ --output-hashing none
       - name: List files in the repository
         run: |
           rm -rf node_modules
