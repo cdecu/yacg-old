@@ -22,5 +22,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.3
         with:
           branch: gh-pages
-          folder: build/
+          folder: dist/
       - run: echo "🍏 This job's status is ${{ job.status }}."
