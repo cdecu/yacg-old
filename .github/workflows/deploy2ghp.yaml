@@ -14,7 +14,7 @@ jobs:
       - name: Lint
         run: |
           node_modules/.bin/nx run ng-yacg:lint
-      - name: Lint
+      - name: Build
         run: |
           node_modules/.bin/nx run ng-yacg:build:production
       - name: List files in the repository
