@@ -19,8 +19,8 @@ jobs:
         run: |
           mkdir ${{ github.workspace }}/dist/
           ls -R ${{ github.workspace }}/dist/
-          node_modules/.bin/nx run ng-yacg:build:production --output-path ${{ github.workspace }}/dist/ --base-href=/yacg/
-          node_modules/.bin/nx run ng-yacg:build:production --output-path ${{ github.workspace }}/dist/ --base-href=/yacg/
+          node_modules/.bin/nx run ng-yacg:build:production --progress --verbose --outputPath ${{ github.workspace }}/dist/ --baseHref=/yacg/
+          node_modules/.bin/nx run ng-yacg:build:production --progress --verbose --outputPath ${{ github.workspace }}/dist/ --baseHref=/yacg/
           ls -R ${{ github.workspace }}/dist/
       - name: List files in the repository
         run: |
