@@ -8,7 +8,7 @@ import { json2codeService } from '../../services/json2code.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputComponent implements OnInit {
-  private data = `[
+  private _data = `[
 {
   "name": "yacg",
   "version": "beta 0.0.1",
@@ -41,15 +41,16 @@ export class InputComponent implements OnInit {
   constructor(public readonly json2code: json2codeService) {}
 
   ngOnInit(): void {
-    this.json2code.data = this.data;
+    this.json2code.data = this._data;
   }
 
-  public get jsonString() {
-    return this.data;
+  public get data() {
+    return this._data;
   }
 
-  public set jsonString(value: string) {
-    if (value !== this.json2code.data) {
+  public set data(value: string) {
+    this._data = value;
+    if (this._data !== this.json2code.data) {
       this.json2code.data = value;
     }
   }
