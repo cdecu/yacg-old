@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: Deploy to GitHub Pages
 on: [push]
 jobs:
   Explore-GitHub-Actions:
@@ -14,4 +14,14 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - name: Install
+        run: yarn install
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - name: Build
+        run: nx run ng-yacg:build --prod
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}/dist/apps/ng-yacg/
       - run: echo "🍏 This job's status is ${{ job.status }}."
