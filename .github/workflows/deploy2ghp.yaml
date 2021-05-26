@@ -8,9 +8,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Install
-        run: yarn install
+        run: npm install
       - name: Build
-        run: DEBUG=* ng build ng-yacg  --verbose --configuration=production  --base-href="/"
+        run: DEBUG=* npx ng build ng-yacg --progress --verbose --configuration=production  --base-href="/"
       - name: List files in the repository
         run: |
           rm -rf node_modules
