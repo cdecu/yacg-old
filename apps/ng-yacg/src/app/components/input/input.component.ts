@@ -12,7 +12,7 @@ export class InputComponent implements OnInit {
   private testJSON = `[
 {
   "name": "yacg",
-  "version": "0.0.1",
+  "version": "beta 0.0.1",
   "license": "MIT",
   "i": 123,
   "f": 123.45,
