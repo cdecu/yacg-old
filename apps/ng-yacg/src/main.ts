@@ -19,6 +19,6 @@ import 'codemirror/addon/edit/matchbrackets';
 platformBrowserDynamic()
   .bootstrapModule(AppModule, {
     defaultEncapsulation: ViewEncapsulation.Emulated,
-    ngZone: 'zone.js',
+    ngZone: 'noop',
   })
   .catch((err) => console.error(err));

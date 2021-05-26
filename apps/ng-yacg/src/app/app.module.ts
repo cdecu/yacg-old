@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
+import { ReactiveComponentModule } from '@ngrx/component';
+
 import { GhButtonModule } from '@ctrl/ngx-github-buttons';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 
@@ -14,7 +16,7 @@ import { OutputComponent } from './components/output/output.component';
 
 @NgModule({
   declarations: [AppComponent, FooterComponent, ResourcesComponent, HeaderComponent, InputComponent, OutputComponent],
-  imports: [BrowserModule, FormsModule, GhButtonModule, CodemirrorModule],
+  imports: [BrowserModule, FormsModule, GhButtonModule, CodemirrorModule, ReactiveComponentModule],
   providers: [],
   bootstrap: [AppComponent],
 })

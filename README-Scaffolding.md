@@ -22,3 +22,7 @@ This requires webpack 5 :(
   
 - Start coding
 
+- Deploy
+  https://github.com/AhsanAyaz/angular-deploy-gh-pages-actions  
+  https://github.com/angular-schule/angular-cli-ghpages  
+  https://efficientuser.com/2021/03/04/how-to-deploy-angular-app-on-github-pages-for-free/   
