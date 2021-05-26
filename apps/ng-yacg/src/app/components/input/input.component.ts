@@ -30,6 +30,10 @@ export class InputComponent implements OnInit {
 
   public readonly Options = {
     language: 'json',
+    theme: 'vs-dark',
+    minimap: {
+      enabled: false,
+    },
   };
 
   constructor(public readonly json2code: json2codeService) {}

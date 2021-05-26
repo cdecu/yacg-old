@@ -13,6 +13,10 @@ export class OutputComponent {
   public readonly Options = {
     readOnly: true,
     language: 'typescript',
+    theme: 'vs-dark',
+    minimap: {
+      enabled: false,
+    },
   };
 
   constructor(public readonly json2code: json2codeService) {
