@@ -11,7 +11,7 @@ jobs:
         with:
           clean: false
       - name: Install
-        run: yarn --version install
+        run: yarn install
       - name: Lint
         run: node_modules/.bin/nx run ng-yacg:lint
       - name: Build
