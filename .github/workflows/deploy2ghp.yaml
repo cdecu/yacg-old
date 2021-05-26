@@ -17,7 +17,6 @@ jobs:
         with:
           targets: build
           projects: ng-yacg
-          args: --base-href=/yacg/ --configuration=development
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.3
         with:
