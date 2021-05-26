@@ -8,13 +8,12 @@ jobs:
         with:
           node-version: '14'
       - uses: actions/checkout@v2
+        with:
+          clean: false
       - name: Install
-        run: |
-          yarn --version
-          yarn install
+        run: yarn --version install
       - name: Lint
-        run: |
-          node_modules/.bin/nx run ng-yacg:lint
+        run: node_modules/.bin/nx run ng-yacg:lint
       - name: Build
         run: DEBUG=* node_modules/.bin/nx run ng-yacg:build:production --progress --verbose --outputPath ${{ github.workspace }}/dist/ --baseHref=/yacg/
       - name: Deploy 🚀
