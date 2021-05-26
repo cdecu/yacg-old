@@ -4,10 +4,10 @@ jobs:
   Deploy-Ng-Yacg:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - uses: actions/setup-node@v2.1.5
         with:
           node-version: '14'
+      - uses: actions/checkout@v2
       - name: Install
         run: |
           yarn --version
@@ -17,8 +17,8 @@ jobs:
           node_modules/.bin/nx run ng-yacg:lint
       - name: Build
         run: |
-          node_modules/.bin/nx run ng-yacg:build:production --output-path ./dist
-          node_modules/.bin/nx run ng-yacg:build:production --output-path ./dist
+          node_modules/.bin/nx run ng-yacg:build:production --output-path ${{ github.workspace }}/dist --base-href=/yacg/
+          node_modules/.bin/nx run ng-yacg:build:production --output-path ${{ github.workspace }}/dist --base-href=/yacg/
       - name: List files in the repository
         run: |
           rm -rf node_modules
