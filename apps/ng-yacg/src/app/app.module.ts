@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveComponentModule } from '@ngrx/component';
 
 import { GhButtonModule } from '@ctrl/ngx-github-buttons';
-import { CodemirrorModule } from '@ctrl/ngx-codemirror';
+import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 
 import { AppComponent } from './app.component';
 import { FooterComponent } from './components/misc/footer.component';
@@ -16,7 +16,13 @@ import { OutputComponent } from './components/output/output.component';
 
 @NgModule({
   declarations: [AppComponent, FooterComponent, ResourcesComponent, HeaderComponent, InputComponent, OutputComponent],
-  imports: [BrowserModule, FormsModule, GhButtonModule, CodemirrorModule, ReactiveComponentModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    GhButtonModule,
+    ReactiveComponentModule,
+    MonacoEditorModule
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

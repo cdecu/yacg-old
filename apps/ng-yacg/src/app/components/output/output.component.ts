@@ -10,12 +10,13 @@ import { json2codeService } from '../../services/json2code.service';
 export class OutputComponent {
   // TODO make dynamic printor list
   public readonly printors = ['typescript', 'pascal'];
-  public readonly cmOptions: { [key: string]: any } = {
-    lineNumbers: true,
-    theme: 'monokai',
-    foldGutter: true,
-    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+  public readonly Options = {
     readOnly: true,
+    language: 'typescript',
+    theme: 'vs-dark',
+    minimap: {
+      enabled: false,
+    },
   };
 
   constructor(public readonly json2code: json2codeService) {
@@ -34,10 +35,10 @@ export class OutputComponent {
   private initEditorOptions(value: string) {
     switch (value) {
       case 'pascal':
-        this.cmOptions.mode = 'pascal';
+        this.Options.language = 'pascal';
         break;
       default:
-        this.cmOptions.mode = { name: 'javascript', typescript: true };
+        this.Options.language = 'typescript';
         break;
     }
   }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { json2codeService } from '../../services/json2code.service';
 
 @Component({
@@ -7,11 +7,11 @@ import { json2codeService } from '../../services/json2code.service';
   styleUrls: ['./input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputComponent {
-  private testJSON = `[
+export class InputComponent implements OnInit {
+  private _data = `[
 {
   "name": "yacg",
-  "version": "0.0.1",
+  "version": "beta 0.0.1",
   "license": "MIT",
   "i": 123,
   "f": 123.45,
@@ -27,33 +27,28 @@ export class InputComponent {
 }
 ]
 `;
-  public readonly cmOptions = {
-    theme: 'monokai',
-    mode: 'application/ld+json',
-    lineNumbers: true,
-    lineWrapping: false,
-    foldGutter: true,
-    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-    autoCloseBrackets: true,
-    matchBrackets: true,
+
+  public readonly Options = {
+    language: 'json',
+    theme: 'vs-dark',
+    minimap: {
+      enabled: false,
+    },
   };
 
   constructor(public readonly json2code: json2codeService) {}
 
-  public get jsonString() {
-    // Initial Value Only Once ...
-    // because we are onPush. Data->Edit->json2codeService
-    if (this.testJSON) {
-      const testJSON = this.testJSON;
-      this.json2code.data = testJSON;
-      this.testJSON = '';
-      return testJSON;
-    }
-    return this.json2code.data;
+  ngOnInit(): void {
+    this.json2code.data = this._data;
   }
 
-  public set jsonString(value: string) {
-    if (value !== this.json2code.data) {
+  public get data() {
+    return this._data;
+  }
+
+  public set data(value: string) {
+    this._data = value;
+    if (this._data !== this.json2code.data) {
       this.json2code.data = value;
     }
   }
