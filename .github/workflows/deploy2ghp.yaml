@@ -17,6 +17,7 @@ jobs:
       - name: Build
         run: |
           node_modules/.bin/nx run ng-yacg:build:production
+          node_modules/.bin/nx run ng-yacg:build:production
       - name: List files in the repository
         run: |
           rm -rf node_modules
