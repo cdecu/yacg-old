@@ -9,9 +9,10 @@ jobs:
       - uses: actions/setup-node@v2.1.5
         with:
           node-version: '14'
-      - run: |
-          npm -g i @angular/cli
-          npm -g i nx
+      - name: Install
+        run: |
+          yarn global add @angular/cli
+          yarn global add nx
           yarn install
       - run: DEBUG=* nx run ng-yacg:build:production --progress --verbose --output-path ${{ github.workspace }}/dist/ --output-hashing none
       - name: List files in the repository
