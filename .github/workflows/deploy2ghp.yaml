@@ -13,9 +13,10 @@ jobs:
           npm -g i @angular/cli
           npm -g i nx
           yarn install
-      - run: DEBUG=* nx run ng-yacg:build:production --progress --verbose --output-path dist/ --output-hashing none
+      - run: DEBUG=* nx run ng-yacg:build:production --progress --verbose --output-path ${{ github.workspace }}/dist/ --output-hashing none
       - name: List files in the repository
         run: |
           rm -rf node_modules
           ls -R ${{ github.workspace }}
+          ls -R ${{ github.workspace }}/dist/
       - run: echo "🍏 This job's status is ${{ job.status }}."
