@@ -27,15 +27,9 @@ export class InputComponent implements OnInit {
 }
 ]
 `;
-  public readonly cmOptions = {
-    theme: 'monokai',
-    mode: 'application/ld+json',
-    lineNumbers: true,
-    lineWrapping: false,
-    // foldGutter: true,
-    // gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-    // autoCloseBrackets: true,
-    // matchBrackets: true,
+
+  public readonly Options = {
+    language: 'json',
   };
 
   constructor(public readonly json2code: json2codeService) {}

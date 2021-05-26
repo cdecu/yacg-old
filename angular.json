@@ -128,7 +128,11 @@
             "polyfills": "apps/ng-yacg/src/polyfills.ts",
             "tsConfig": "apps/ng-yacg/tsconfig.app.json",
             "aot": true,
-            "assets": ["apps/ng-yacg/src/favicon.ico", "apps/ng-yacg/src/assets"],
+            "assets": [
+              "apps/ng-yacg/src/favicon.ico",
+              "apps/ng-yacg/src/assets",
+              { "glob": "**/*", "input": "node_modules/monaco-editor", "output": "assets/monaco-editor" }
+            ],
             "allowedCommonJsDependencies": ["@ctrl/ngx-codemirror"],
             "styles": ["apps/ng-yacg/src/styles.scss"],
             "scripts": []

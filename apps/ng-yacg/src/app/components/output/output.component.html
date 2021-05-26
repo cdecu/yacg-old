@@ -7,5 +7,5 @@
 </div>
 
 <div class="output-editor">
-  <ngx-codemirror #codeEditor [ngModel]="this.json2code.$code | ngrxPush" [options]="cmOptions"> </ngx-codemirror>
+  <ngx-monaco-editor class="editor" [options]="Options" [ngModel]="json2code.$code | ngrxPush"> </ngx-monaco-editor>
 </div>

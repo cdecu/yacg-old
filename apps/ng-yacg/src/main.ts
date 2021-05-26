@@ -1,11 +1,3 @@
-import 'codemirror/mode/pascal/pascal';
-import 'codemirror/mode/javascript/javascript';
-import 'codemirror/addon/fold/foldgutter';
-import 'codemirror/addon/fold/brace-fold';
-import 'codemirror/lib/codemirror';
-import 'codemirror/addon/edit/closebrackets';
-import 'codemirror/addon/edit/matchbrackets';
-
 import { enableProdMode, NgZone, ViewEncapsulation } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
