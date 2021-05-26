@@ -10,7 +10,7 @@ jobs:
         with:
           node-version: '14'
       - run: yarn install
-      - run: yarn ng build ng-yacg --progress --verbose --configuration=production  --base-href="/"
+      - run: yarn nx run ng-yacg:build:production --progress --verbose --output-path dist/ --output-hashing false
       - name: List files in the repository
         run: |
           rm -rf node_modules
