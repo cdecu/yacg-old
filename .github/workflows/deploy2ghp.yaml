@@ -7,20 +7,22 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2.1.5
         with:
-          node-version: '14'
+          node-version: '16'
       - name: Install
         run: |
+          yarn --version
           yarn install
       - name: Lint
         run: |
           node_modules/.bin/nx run ng-yacg:lint
       - name: Build
         run: |
-          node_modules/.bin/nx run ng-yacg:build:production
-          node_modules/.bin/nx run ng-yacg:build:production
+          node_modules/.bin/nx run ng-yacg:build:production --output-path ./dist
+          node_modules/.bin/nx run ng-yacg:build:production --output-path ./dist
       - name: List files in the repository
         run: |
           rm -rf node_modules
           ls -R ${{ github.workspace }}
           ls -R ${{ github.workspace }}/dist/
+          ls -R ./dist/
       - run: echo "🍏 This job's status is ${{ job.status }}."
