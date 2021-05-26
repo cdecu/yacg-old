@@ -32,10 +32,10 @@ export class InputComponent implements OnInit {
     mode: 'application/ld+json',
     lineNumbers: true,
     lineWrapping: false,
-    foldGutter: true,
-    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-    autoCloseBrackets: true,
-    matchBrackets: true,
+    // foldGutter: true,
+    // gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+    // autoCloseBrackets: true,
+    // matchBrackets: true,
   };
 
   constructor(public readonly json2code: json2codeService) {}
