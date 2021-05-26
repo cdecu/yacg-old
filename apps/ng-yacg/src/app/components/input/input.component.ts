@@ -42,8 +42,12 @@ export class InputComponent implements OnInit {
   constructor(public readonly json2code: json2codeService) {}
 
   ngOnInit(): void {
-    this.data = this.testJSON;
-    this.json2code.data = this.data;
+    if (this.testJSON) {
+      this.data = this.testJSON;
+      this.json2code.data = this.data;
+      this.testJSON = '';
+      this.testJSON = '';
+    }
   }
 
   public get jsonString() {
