@@ -5,12 +5,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 Event ${{ github.event_name }} os ${{ runner.os }} repo ${{ github.repository }} branch ${{ github.ref }}."
-      - name: Check out repository code
-        uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: '14'
+      - uses: actions/checkout@v2
       - name: Install
         run: npm install
       - name: Build
-        run: DEBUG=* npx ng build ng-yacg --progress --verbose --configuration=production  --base-href="/"
+        run: npx ng build ng-yacg --progress --verbose --configuration=production  --base-href="/"
       - name: List files in the repository
         run: |
           rm -rf node_modules
