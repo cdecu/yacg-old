@@ -1,5 +1,8 @@
 name: Deploy to GitHub Pages
-on: [push]
+on:
+  push:
+    branches:
+      - master
 jobs:
   Ng-Yacg-Deploy:
     runs-on: ubuntu-latest
@@ -8,7 +11,8 @@ jobs:
       - name: Angular Deploy Yacg to gh-pages
         uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.2
         with:
+          github_access_token: ${{ secrets.ACCESS_TOKEN }}
           build_configuration: production
-          base_href: /yacg/ng-yacg
+          base_href: /yacg/
           deploy_branch: gh-pages
           angular_dist_build_folder: dist/apps/ng-yacg
