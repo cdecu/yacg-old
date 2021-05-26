@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { json2codeService } from '../../services/json2code.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { json2codeService } from '../../services/json2code.service';
   styleUrls: ['./input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputComponent {
+export class InputComponent implements OnInit {
   private testJSON = `[
 {
   "name": "yacg",
@@ -40,14 +40,18 @@ export class InputComponent {
 
   constructor(public readonly json2code: json2codeService) {}
 
+  ngOnInit(): void {
+    console.log('ngOnInit');
+  }
+
   public get jsonString() {
     // Initial Value Only Once ...
     // because we are onPush. Data->Edit->json2codeService
     if (this.testJSON) {
-      const testJSON = this.testJSON;
-      this.json2code.data = testJSON;
-      this.testJSON = '';
-      return testJSON;
+      // const testJSON = this.testJSON;
+      // this.json2code.data = testJSON;
+      // this.testJSON = '';
+      // return testJSON;
     }
     return this.json2code.data;
   }
