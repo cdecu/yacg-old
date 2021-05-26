@@ -20,7 +20,7 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - name: Build
-        run: nx run ng-yacg:build --prod
+        run: yarn nx run ng-yacg:build --prod
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}/dist/apps/ng-yacg/
