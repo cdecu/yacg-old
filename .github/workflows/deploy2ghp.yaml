@@ -10,7 +10,7 @@ jobs:
       - name: Install
         run: yarn install
       - name: Build
-        run: yarn nx run ng-yacg:build --prod
+        run: DEBUG=* yarn ng  build ng-yacg  --verbose --configuration=production  --base-href="/"
       - name: List files in the repository
         run: |
           rm -rf node_modules
