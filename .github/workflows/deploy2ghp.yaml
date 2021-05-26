@@ -1,18 +1,25 @@
 name: Deploy to GitHub Pages
-on:
-  push:
-    branches:
-      - master
+on: [push]
 jobs:
-  Ng-Yacg-Deploy:
+  Deploy-Ng-Yacg:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Angular Deploy Yacg to gh-pages
-        uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.2
+      - uses: actions/setup-node@v2.1.5
         with:
-          github_access_token: ${{ secrets.ACCESS_TOKEN }}
-          build_configuration: production
-          base_href: /yacg/
-          deploy_branch: gh-pages
-          angular_dist_build_folder: dist/apps/ng-yacg
+          node-version: '14'
+      - name: Install
+        run: |
+          yarn install
+      - name: Lint
+        run: |
+          node_modules/.bin/nx run ng-yacg:lint
+      - name: Lint
+        run: |
+          node_modules/.bin/nx run ng-yacg:build:production
+      - name: List files in the repository
+        run: |
+          rm -rf node_modules
+          ls -R ${{ github.workspace }}
+          ls -R ${{ github.workspace }}/dist/
+      - run: echo "🍏 This job's status is ${{ job.status }}."
