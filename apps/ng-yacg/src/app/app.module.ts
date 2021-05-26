@@ -20,6 +20,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
     minimap: {
       enabled: false,
     },
+    automaticLayout: true,
   },
 };
 
