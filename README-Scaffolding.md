@@ -26,3 +26,34 @@ This requires webpack 5 :(
   https://github.com/AhsanAyaz/angular-deploy-gh-pages-actions  
   https://github.com/angular-schule/angular-cli-ghpages  
   https://efficientuser.com/2021/03/04/how-to-deploy-angular-app-on-github-pages-for-free/   
+
+
+- GitHub Actions
+``` 
+name: Deploy to GitHub Pages
+on: [push]
+jobs:
+  Deploy-Ng-Yacg:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.1.5
+        with:
+          node-version: '14'
+      - name: Install
+        run: yarn install
+      - name: Nrwl Nx
+        uses: MansaGroup/nrwl-nx-action@v2.1.0
+        with:
+          targets: build
+          projects: ng-yacg
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.3
+        with:
+          branch: gh-pages
+          folder: build
+          clean: true
+          single-commit: true
+          silent: true
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+```
