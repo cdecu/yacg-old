@@ -130,8 +130,7 @@
             "aot": true,
             "assets": [
               "apps/ng-yacg/src/favicon.ico",
-              "apps/ng-yacg/src/assets",
-              { "glob": "**/*", "input": "node_modules/monaco-editor", "output": "assets/monaco-editor" }
+              "apps/ng-yacg/src/assets"
             ],
             "allowedCommonJsDependencies": ["@ctrl/ngx-codemirror"],
             "styles": ["apps/ng-yacg/src/styles.scss"],
