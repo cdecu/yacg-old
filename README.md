@@ -1,7 +1,7 @@
 # Yacg
 
 Yet another Code generator. It is a spare time project !    
-NO it is not yacc :( it is just a small personal project.  
+No it is not yacc :( it is just a small personal project.  
 It is just the beginning but the idea is to 
 - Transform json data into code interface.   
   - guess required
@@ -46,27 +46,6 @@ It is just the beginning but ...
    - add --out
    - add --target language 
 - add ng app deployed on github pages
-
-## Inspiration
-- https://github.com/Himenon/openapi-typescript-code-generator
-- https://ts-ast-viewer.com/
-
-- https://hiphip.app/?s=09
-- https://jsonapi.org/examples/?s=09
-- https://github.com/bcherny/json-schema-to-typescript?s=09
-- https://indepth.dev/posts/1442/ngrx-bad-practices?s=09
-- https://twitter.com/stack_tracy_/status/1370983902718791683?s=09
-- https://dev-academy.com/angular-user-login-and-registration-guide-cookies-and-jwt/?utm_source=twitter&s=09
-- https://www.jayfreestone.com/writing/bulletproof-flag/
-- https://github.com/kapunahelewong/module-injector-tree/blob/master/src/app/lazy/lazy.module.ts
-
-- https://github.com/compodoc
-- https://ngx-codemirror.vercel.app/
-- https://les-enovateurs.com/
-- https://tsquery-playground.firebaseapp.com/
-
-
-
 
 ## Contributing
 
@@ -116,6 +95,24 @@ Please help if you find some interest.
   fieldList5 ?: string[];
 }
 ```
+
+## Inspiration
+- https://github.com/Himenon/openapi-typescript-code-generator
+- https://ts-ast-viewer.com/
+
+- https://hiphip.app/?s=09
+- https://jsonapi.org/examples/?s=09
+- https://github.com/bcherny/json-schema-to-typescript?s=09
+- https://indepth.dev/posts/1442/ngrx-bad-practices?s=09
+- https://twitter.com/stack_tracy_/status/1370983902718791683?s=09
+- https://dev-academy.com/angular-user-login-and-registration-guide-cookies-and-jwt/?utm_source=twitter&s=09
+- https://www.jayfreestone.com/writing/bulletproof-flag/
+- https://github.com/kapunahelewong/module-injector-tree/blob/master/src/app/lazy/lazy.module.ts
+
+- https://github.com/compodoc
+- https://ngx-codemirror.vercel.app/
+- https://les-enovateurs.com/
+- https://tsquery-playground.firebaseapp.com/
 
 
 ## License
