@@ -128,10 +128,7 @@
             "polyfills": "apps/ng-yacg/src/polyfills.ts",
             "tsConfig": "apps/ng-yacg/tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "apps/ng-yacg/src/favicon.ico",
-              "apps/ng-yacg/src/assets"
-            ],
+            "assets": ["apps/ng-yacg/src/favicon.ico", "apps/ng-yacg/src/assets"],
             "allowedCommonJsDependencies": ["@ctrl/ngx-codemirror"],
             "styles": ["apps/ng-yacg/src/styles.scss"],
             "scripts": []
@@ -157,6 +154,29 @@
                 }
               ],
               "outputHashing": "none"
+            },
+            "github-pages": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/ng-yacg/src/environments/environment.ts",
+                  "with": "apps/ng-yacg/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "none",
+              "baseHref": "/yacg/",
+              "outputPath": "docs"
             },
             "development": {
               "buildOptimizer": false,
