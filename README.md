@@ -1,16 +1,19 @@
 # Yacg
 
 Yet another Code generator. It is a spare time project !    
-NO it is not yacc :( it is just a small personal project.
+NO it is not yacc :( it is just a small personal project.  
+It is just the beginning but the idea is to 
 - Transform json data into code interface.   
   - guess required
-  - guess if enum 
+  - guess if enum
 - Transform json schemas into code interface.  
-  
+
+## Test
+[Online test on Github Pages](https://cdecu.github.io/yacg/)
 
 ## Installation
 
-Yacg can be used as a CLI or as a library, just get it as a NPM package or clone the source.
+Yacg can(will) be used as a CLI or as a library, just get it as a NPM package or clone the source.
 ```text
 npm install @yacg/core
 npm install @yacg/json2code --save-dev
